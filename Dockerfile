@@ -5,5 +5,5 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . .
-ENTRYPOINT ['python3']
+ENTRYPOINT ['python3.10']
 CMD ['services/server_221781.py']
