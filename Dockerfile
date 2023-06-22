@@ -1,9 +1,8 @@
-FROM ubuntu:latest
-RUN apt-get update -y
-RUN apt-get install -y python3-pip python3.10-dev build-essential
+FROM tensorflow/tensorflow:2.12.0
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-COPY . .
-ENTRYPOINT ['python3.10']
-CMD ['services/server_221781.py']
+COPY ./services ./services
+COPY ./models ./models
+ENTRYPOINT ["python"]
+CMD ["services/server_221234.py"]
