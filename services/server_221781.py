@@ -3,7 +3,7 @@
 from flask import Flask, request
 import tensorflow as tf
 
-from services.utils import data_to_img, predict_imagenet
+from utils import data_to_img, predict_imagenet
 
 app = Flask('Image classifier')
 # resnet = tf.keras.applications.ResNet101()
@@ -29,8 +29,8 @@ def home():
 #     return out
 
 
-@app.route('/classify/binary', methods=['POST'])
-def classify_binary():
+@app.route('/classify', methods=['POST'])
+def classify():
     data = request.data
     img = tf.io.decode_jpeg(data)
     img_t = tf.expand_dims(img, axis=0)
