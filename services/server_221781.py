@@ -29,8 +29,8 @@ def home():
 #     return out
 
 
-@app.route('/classify', methods=['POST'])
-def classify():
+@app.route('/classify/binary', methods=['POST'])
+def classify_binary():
     data = request.data
     img = tf.io.decode_jpeg(data)
     img_t = tf.expand_dims(img, axis=0)
