@@ -5,4 +5,4 @@ RUN pip install -r requirements.txt
 COPY ./services ./services
 COPY ./models ./models
 ENTRYPOINT ["python"]
-CMD ["services/server_221234.py"]
+CMD ["services/server_221781.py"]
