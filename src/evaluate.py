@@ -1,23 +1,31 @@
 import tensorflow as tf
-import os
 
-model = tf.keras.models.load_model('models/dummy_model')
+data_dir = 'data/raw'
+report_path = 'output/report.txt'
+model_path = 'models/my_model'
 
-def classify_binary(img_path: str) -> int:
-    img = tf.keras.utils.load_img(img_path, target_size=(180, 180))
-    # img = tf.io.decode_jpeg(data)
-    img_t = tf.expand_dims(img, axis=0)
 
-    predictions = model.predict(img_t)
-    dog_probability = float(predictions[0])
-    print(dog_probability)
-    idx = dog_probability > 0.5
-    return int(idx)
+def evaluate():
+    test_df = tf.keras.utils.image_dataset_from_directory(
+        data_dir,
+        image_size=(180, 180))
+    model = tf.keras.models.load_model(model_path)
+    metrics = [
+        tf.metrics.BinaryAccuracy(),
+        tf.metrics.Precision(),
+        tf.metrics.Recall()
+    ]
+    model.compile(metrics=metrics)
+    result = model.evaluate(test_df)
+    _, acc, precision, recall = result
+
+    result_lines = [
+        f'Test data len: {len(test_df)}\n'
+        f'Accuracy: {acc:.3f}, Precision: {precision:.3f}, Recall: {recall:.3f}'
+    ]
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.writelines(result_lines)
+
 
 if __name__ == '__main__':
-    cat_imgs = os.listdir('data/raw/pinterest/Cat')
-    y_pred = [
-        classify_binary(
-            os.path.join('data/raw/pinterest/Cat', img_path)) for img_path in cat_imgs
-    ]
-    print(y_pred)
+    evaluate()
