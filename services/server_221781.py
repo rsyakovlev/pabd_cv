@@ -3,7 +3,8 @@
 from flask import Flask, request
 import tensorflow as tf
 
-from services.utils import data_to_img, predict_imagenet
+# from services.utils import data_to_img, predict_imagenet
+from utils import data_to_img, predict_imagenet
 
 app = Flask('Image classifier')
 # resnet = tf.keras.applications.ResNet101()
